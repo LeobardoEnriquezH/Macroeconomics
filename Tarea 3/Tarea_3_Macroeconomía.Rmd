@@ -1,0 +1,1044 @@
+---
+title: ""
+date: ""
+header-includes:
+- \usepackage[utf8]{inputenc}
+- \usepackage[spanish]{babel}
+- \usepackage{graphicx}
+- \usepackage{multirow,rotating}
+- \pagenumbering{gobble} 
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    includes:
+      in_header: labels.tex
+      before_body: cover.tex
+csl: apa.csl
+bibliography: fuentes1.bib
+---
+
+```{=tex}
+\pagenumbering{gobble}
+\pagenumbering{arabic}
+```
+```{r setup, include=FALSE }
+knitr::opts_chunk$set(echo = F, fig.width = 6, fig.height = 3.5)
+```
+
+```{r, include=FALSE}
+
+rm(list = ls())
+
+pacman::p_load(tidyverse,
+               kableExtra,
+               ggplot2,
+               cowplot,
+               stargazer,knitr,viridis,dplyr,readr,scales,quantmod,texreg,tinytex, tidyr, imager,lubridate,tseries, astsa, growthrates, tis, dynlm, readxl, foreign)
+```
+
+\newpage
+
+# Instrucciones
+
+```{=tex}
+\subsection*{Instrucciones}
+Realice los siguientes ejercicios en su equipo de trabajo designado. La tarea se califica del 0 al 15 (¡!).
+
+\begin{enumerate}
+\item Resuelva los ejercicios 11.2 y 11.9 (5a Ed.). Realice estos con ayuda de su laboratorista y entregue las soluciones a máquina, utilizando LaTeX. [2 horas,1 punto cada ejercicio]
+
+\item Estudie el mercado laboral en México siguiendo estos pasos: [2 horas, 0.5 puntos cada inciso]. Por favor documente su trabajo para que se pueda replicar.
+\begin{enumerate}
+\item Obtenga del INEGI una serie anual de los salarios (en términos reales) en México, calcule la serie de su tasa de cambio anual, calcule la volatilidad de dicha serie. (Serie 1)
+\item Obtenga del INEGI una serie anual del empleo total en México, calcule la serie de su tasa de cambio anual, calcule la volatilidad de dicha serie. (Serie 2)
+\item Obtenga del INEGI una serie anual del producto interno bruto en términos reales, calcule su tasa de cambio anual, calcule su volatilidad. (Serie 3)
+\item Grafique las tres series de tasas de cambios de forma que se puedan comparar.
+\item Calcule la covarianza de la serie 1 con la 3 y de la 2 con la 3.
+\item Explique si sus resultados son o no consistentes con los hechos estilizados para EEUU que se discutieron en clase.
+\end{enumerate}
+
+\item Contraste un modelo trivial de la determinación del salario con los datos siguiendo estos pasos: [2 horas, 0.5 puntos cada inciso]. Por favor documente su trabajo para que se pueda replicar.
+\begin{enumerate}
+\item Obtenga una serie del PIB $Y_t$ de la economía.
+\item Obtenga una serie del capital $K_t$ de la economía (``Indice de Volumen físico acumulado´´).
+\item Obtenga una serie del empleo $L_t$ de la economía.
+\item Cree una serie de la productividad $A_t$ de la economía a partir de asumir una función de producción $Y_t=A_tF(K,L)$, con $F(K,L)=K^{0.3}L^{0.7}$.
+\item Cree una serie contrafactual del salario que se debió de haber observado si el salario fuera el ingreso marginal del trabajo $A_tF_L(K_t,L_t)$.
+\item Compare el salario observado con el salario contrafactual a la luz de los hechos estilizados y las teorías descritas en clase.
+\end{enumerate}
+\item Desarrolle su intuición cuantitativa sobre la informalidad laboral en México siguiendo estos pasos   [3 horas, 0.5 puntos cada inciso]. Por favor documente su trabajo para que se pueda replicar.
+\begin{enumerate}
+\item Obtenga la Matriz Hussmans para México, del INEGI, para algún trimestre de 2019. 
+\item A partir de la tabla, averigüe qué proporción de los trabajadores trabaja en el ``sector informal'' de la economía.
+\item A partir de la tabla, averigüe qué proporción de los trabajadores del sector formal son informales.
+\item Averigüe con datos del INEGI cuáles son las industrias formales con mayor proporción de trabajadores informales y los estados de la república con mayor proporción de trabajadores informales.
+\item Obtenga una medida de salario por industria y grafique el nivel de informalidad contra el salario.
+\item Averigue si la tasa de informalidad (la proporción, del total de personas ocupadas, que trabajan informalmente) se comportó de forma ``procíclica'' o ``contracíclica'' durante los primeros meses de esta pandemia y contrástelo con el comportamiento durante crisis anteriores (1994-5 y 2008-9).
+\item Enuncie algunas conclusiones tentativas sobre los resultados que obtuvo, relacionándolas con los modelos discutidos en clase.
+\end{enumerate}
+\item Practique trabajar con datos laborales de México siguiendo estos pasos: [3 horas, 0.5 puntos cada inciso]. Por favor documente su trabajo para que se pueda replicar.
+\begin{enumerate}
+\item Explique en un par de párrafos cómo es que el INEGI atendió la ncesidad de crear encuestas durante el inicio de la pandemia con la ENOE-T y luego como aterrizó una nueva encuesta, la ENOE-N de ahí en adelante.
+\item Descargue los micro-datos de la ENOE (ENOE,ENOE-T y ENOE-N), correspondientes a los cuatro trimestres de 2020.
+\item Calcule el desempleo en cada trimestre, explicando cómo lo calculó.
+\item Calcule, utilizando a los individuos que aparecen en más de uno de los trimestres, la fracción de trabajadores que pasan del empleo al desempleo y del desempleo al empleo entre los cuatro trimestres del 2020. Esta es la parte más complicada, pero la más útil, porque enseña que la ENOE es una encuesta tipo panel rotativo, y cómo utilizar esta característica.
+\item Calcule qué fracción de los trabajadores trabaja en empresas chicas, medianas y grandes.
+\item Calcule qué fracción de los trabajadores está buscando otro empleo.
+\item Grafique la relación entre el ingreso promedio y la edad de los trabajadores.
+\item Documente y entregue su código estadístico para realizar este ejercicio.
+\end{enumerate}
+\end{enumerate}
+```
+\newpage
+
+# Soluciones
+
+## Ejercicio 1
+
+### 11.2.
+
+**Salarios de eficiencia y negociación (Garino y Martin, 2000). Summers (1988, p. 386) asegura que en un ambiente de salarios de eficiencia, las firmas que están forzadas a pagar a los trabajadores salarios premium sufren pérdidas de segundo orden. En casi cualquier aparato de negociación verosímil, esto hace que sea más fácil extraer concesiones para los trabajadores. Se pregunta cómo investigar esta afirmación.**
+
+#### a) 
+
+**Supóngase que e está fija en 1, tal que las consideraciones de un salario de eficiencia no existen.**
+
+##### i)
+
+**¿Qué valor de L escoge la firma, dado w? ¿Cuál es el nivel resultante de beneficios?**
+
+Si e está fijado en 1 y w está dado, el problema de la firma es elegir L para maximizar sus beneficios:
+
+$$
+\pi = \frac{L^\alpha}{\alpha} - wL
+$$
+
+Cuya condición de primer orden (CPO) es:
+
+$$
+\frac{\delta\pi}{\delta L} = L^{\alpha-1} - w = 0
+$$
+
+Por tanto, la elección de la firma sobre el empleo es:
+
+$$
+L = w^{-1/(1-\alpha)}
+$$
+
+Sustituyendo la ecuación anterior en la función de beneficios, se obtiene:
+
+$$
+\pi = \frac{w^{-1/(1-\alpha)}}{\alpha} - w^{[(1-\alpha)-1]/(1-\alpha)}= w^{-\alpha/(1-\alpha)}[(1/\alpha)-1]
+$$
+
+Por lo que el beneficio es:
+
+$$
+\pi = [(1-\alpha)/\alpha]w^{-\alpha(1-\alpha)}
+$$
+
+##### ii) 
+
+**Supóngase que la firma y el sindicato escogen w para maximizar $U^{\gamma}\pi^{1-\gamma}$ donde $0 < \gamma < \alpha$ indexan el poder de negociación del sindicato. ¿Qué nivel de w se escoge?**
+
+Sustituyendo el nivel de L en la función objetivo del sindicato, $U = (w -x)L$:
+
+$$
+U = (w-x)x^{-1/(1-\alpha)}
+$$
+
+A partir de esta ecuación y la que se obtuvo de beneficios, se tiene el siguiente problema de negociación:
+
+$$
+max_{w} ~~ (w-x)^\gamma w^{-\gamma/(1-\alpha)}[(\frac{1-\alpha}{\alpha})w^{-\alpha/(1-\alpha)}]^{1-\gamma}
+$$
+
+Para simplificar el álgebra de la maximización, tómese el log de $U^\gamma \pi^{1-\gamma}$:
+
+$$
+max_w ~~ \gamma ln(w-x) - \frac{\gamma}{1-\alpha}lnw + (1-\gamma)ln(\frac{1-\alpha}{\alpha})-\frac{\alpha(1-\gamma)}{1-\alpha}lnw
+$$
+
+Cuya CPO es:
+
+$$
+\frac{\delta[ln(U^\gamma\pi^{1-\gamma})]}{\delta w} = \gamma \frac{1}{w-x} - \frac{\gamma}{1-\alpha}\frac{1}{w} - \frac{\alpha(1-\gamma)}{1-\alpha}\frac{1}{w} = 0
+$$
+
+Que puede ser reescrita como:
+
+$$
+\gamma \frac{1}{w-x} = \frac{\gamma + \alpha - \alpha \gamma}{1-\alpha}\frac{1}{w}
+$$
+
+Realizando una multiplicación cruzada se obtiene:
+
+$$
+(1-\alpha)\gamma w = [\alpha + \gamma (1-\alpha)](w-x)
+$$
+
+Restando $(1-\alpha)\gamma w$ de cada lado:
+
+$$
+\alpha w = [\alpha + (1-\alpha)\gamma]x
+$$
+
+Por tanto, el salario escogido durante el proceso de negociación es:
+
+$$
+w = \frac{\alpha + (1-\alpha)\gamma}{\alpha}x
+$$
+
+#### b)
+
+**Supóngase que e está dado por $e = [(w-x)/x]^{\beta}$ para $w > x$ donde $0 < \beta < 1$**
+
+##### i)
+
+**¿Qué valor de L escoge la firma, dado w? ¿Cuál es el nivel de beneficios resultante?**
+
+Sustituyendo $e = [(w-x)/x]^\beta$ en la expresión de beneficios permite caracterizar el problema de la firma como:
+
+$$
+max_L ~~ \pi = \frac{1}{\alpha}(\frac{w-x}{x})^{\alpha \beta}L^\alpha - wL
+$$
+
+Cuya CPO es:
+
+$$
+\frac{\delta \pi}{\delta L} = (\frac{w-x}{x})^{\alpha \beta} L^{\alpha -1} - w = 0
+$$
+
+Por lo que la elección sobre el trabajo de la firma es:
+
+$$
+L = (\frac{w-x}{x})^{\alpha \beta/(1-\alpha)}w^{-1/(1-\alpha)}
+$$
+
+Sustituyendo la ecuación anterior en la función de beneficios, se obtiene:
+
+$$
+\pi = \frac{1}{\alpha}(\frac{w-x}{x})^{\alpha \beta}(\frac{w-x}{x})^{\alpha^2 \beta/(1-\alpha)}w^{-\alpha/(1-\alpha)}-w^{1-[1/(1-\alpha)]}(\frac{w-x}{x})^{\alpha \beta/(1-\alpha)}
+$$
+
+Como $\alpha \beta + [\alpha^2 \beta/(1-\alpha)] = [\alpha \beta - \alpha^2 \beta + \alpha^2 \beta]/(1-\alpha) = \alpha \beta/(1-\alpha)$ y $1-[1/(1-\alpha)] = [(1-\alpha-1)/(1-\alpha)] = -\alpha/(1-\alpha)$, la ecuación anterior puede ser reescrita como:
+
+$$
+\pi = \frac{1}{\alpha}(\frac{w-x}{x})^{\alpha \beta/(1-\alpha)}w^{-\alpha/(1-\alpha)}-w^{-\alpha/(1-\alpha)}(\frac{w-x}{x})^{\alpha \beta/(1-\alpha)}
+$$
+
+Simplificando:
+
+$$
+\pi = \frac{1-\alpha}{\alpha}(\frac{w-x}{x})^{\alpha \beta/(1-\alpha)}w^{-\alpha/(1-\alpha)}
+$$
+
+##### ii)
+
+**Supóngase que la firma y el sindicato escogen w para maximizar $U^\gamma\pi^{1-\gamma}, 0 < \gamma < \alpha$. ¿Qué nivel de w escogen?**
+
+Sustituyendo el nivel L obtenido en el inciso anterior en la función objetivo del sindicato, $U = (w-x)L$:
+
+$$
+U = (w-x)(w-x)^{\frac{\alpha \beta}{1-\alpha}}(\frac{1}{x})^{\frac{\alpha \beta}{1-\alpha}}w^{\frac{-1}{1-\alpha}}
+$$
+
+Que se simplifica como:
+
+$$
+U = (w-x)^{\frac{1-\alpha(1-\beta)}{1-\alpha}}(\frac{1}{x})^{\frac{\alpha \beta}{1-\alpha}}w^{\frac{-1}{1-\alpha}}
+$$
+
+Utilizando esta ecuación en la función de beneficios de la empresa, se obtiene el siguiente problema de negociación:
+
+$$
+max_w ~~ (w-x)^{\frac{1-\alpha(1-\beta)\gamma}{1-\alpha}}(\frac{1}{x})^{\frac{\alpha \beta \gamma}{1-\alpha}}w^{\frac{-\gamma}{1-\alpha}}(\frac{1-\alpha}{\alpha})^{1-\alpha}(w-x)^{\frac{\alpha \beta(1-\gamma)}{1-\alpha}}(\frac{1}{x})^{\frac{\alpha \beta(1-\gamma)}{1-\alpha}}w^{\frac{-\alpha(1-\gamma)}{1-\alpha}}
+$$
+
+De nuevo, se maximizará el log de $U^\gamma\pi^{1-\alpha}$. Ignorando los términos que no contienen w, se tiene el siguiente problema de negociación:
+
+$$
+max_w ~~ \frac{[1-\alpha(1-\beta)]\gamma}{1-\alpha}ln(w-x)-\frac{\gamma}{1-\alpha}lnw + \frac{\alpha \beta(1-\gamma)}{1-\alpha}ln(w-x)- \frac{\alpha(1-\gamma)}{1-\alpha}lnw
+$$
+
+Cuya CPO es:
+
+$$
+\frac{\delta[ln(U^\gamma\pi^{1-\gamma})]}{\delta w} = \frac{[1-\alpha(1-\beta)]\gamma}{1-\alpha}\frac{1}{w-x} - \frac{\gamma}{1-\alpha}\frac{1}{w} + \frac{\alpha \beta(1-\gamma)}{1-\alpha}\frac{1}{w-x} - \frac{\alpha(1-\gamma)}{1-\alpha}\frac{1}{w} = 0
+$$
+
+Que puede ser reescrita como:
+
+$$
+\frac{1}{1-\alpha}[\gamma - \alpha \gamma(1-\beta) + \alpha \beta - \alpha \beta \gamma]\frac{1}{w-x} = \frac{1}{1-\alpha}[\gamma + \alpha - \alpha \gamma]\frac{1}{2}
+$$
+
+Multiplicando ambos lados por $(1-\alpha)$ y simplificando:
+
+$$
+[\gamma - \alpha(\gamma - \beta)]\frac{1}{w-x} = [\alpha + (1-\alpha)\gamma]\frac{1}{w}
+$$
+
+Multiplicando de forma cruzada:
+
+$$
+[\gamma - \alpha(\gamma - \beta)]w = [\alpha + (1-\alpha)\gamma](w-x)
+$$
+
+Restando $\gamma w$ de ambos lados:
+
+$$
+-\alpha(\gamma - \beta)w = \alpha(1-\gamma)w - [\alpha + (1-\alpha)\gamma]x
+$$
+
+Simplifcando:
+
+$$
+[-\alpha \gamma + \alpha \beta - \alpha + \alpha \gamma]w = -[\alpha + (1-\alpha)\gamma]x
+$$
+$$
+-[\alpha(1-\beta)]w = -[\alpha + (1-\alpha)\gamma]x
+$$
+
+Por lo que el salario escogido en el proceso de negociación es:
+
+$$
+w = \frac{\alpha + (1-\alpha)\gamma}{\alpha(1-\beta)}x
+$$
+
+Donde si $\beta = 0$, el resultado es el mismo que en a):
+
+$$
+w = \frac{\alpha + (1-\alpha)\gamma}{\alpha(1-\beta)}x = \frac{\alpha + (1-\alpha)\gamma}{\alpha}x
+$$
+
+##### iii)
+
+**¿El impacto proporcional del poder de negociación de los trabajadores es mayor con salarios de eficiencia, o sin ellos? ¿ Es mayor cuando los efectos de los salarios de eficiencia, $\beta$, son más grandes?**
+
+El impacto proporcional del poder de negociación de los trabajadores en los salarios puede ser medido por una elasticidad:
+
+$$
+\frac{\delta[lnw]}{\delta \gamma}
+$$
+
+En ausencia de salarios de eficiencia, el salario elegido en el proceso de negociación está dado por:
+
+$$
+w  = \frac{\alpha + (1-\alpha)\gamma}{\alpha}x
+$$
+
+Comparando esta ecuación con $w = \frac{\alpha + (1-\alpha)\gamma}{\alpha(1-\beta)}x$ podemos ver que, bajo salarios de eficiencia, el salario aumenta por el factor de $\frac{1}{(1-\beta)}$. Por tanto, el hecho de que existan salarios de eficiencia no afecta la elasticidad dada por $\frac{\delta[lnw]}{\delta \gamma}$. Así, el impacto proporcional sobre los salarios del poder de negociación de los trabajadores NO es mayor con salarios de eficiencia que sin ellos.
+
+### 11.9
+
+**El modelo Harris-Todaro. Supóngase que existen dos sectores. Los empleos del sector primario pagan $w_p$; los empleos del sector secundario pagan $w_s$. Cada trabajador decide en qué sector está. Todos los trabajadores que escogen el sector secundario obtienen un trabajo. Sin embargo, existe un número fijo, $N_p$, de empleos primarios, los cuales están distribuidos aleatoriamente entre los trabajadores que escogen este sector. Aquellos trabajadores que no consiguen un empleo primario son desempleados y reciben un beneficio $b$. Los trabajadores son neutrales al riesgo y no existe desutilidad por trabajar. Por tanto, la utilidad esperada de los trabajadores primarios es $qw_p+(1-q)b$, donde $q$ es la probabilidad de que un trabajador obtenga un trabajo primario. Asúmase que $b < w_s < w_p$ y que $N_p/\bar N < (w_s - b)/(w_p - b)$.**
+
+#### a)
+
+**¿CUál es el desempleo de equilibrio como función de $w_p, w_s, N_p, b$ y el tamaño de la fuerza laboral, $\bar N$?**
+
+En el equilibrio, debe ocurrir que el número de personas en el sector primario sea igual al número de personas empleadas. Así, esto iguala al número de empleos primarios, $N_p$, más el número de personas desempleadas en la economía, U. Además, en equilibrio, y dado que los individuos son contratados aleatoriamente, la probabilidad de obtener un empleo primario, q, es igual al número total de trabajos, $N_p$, dividido por el total de personas en el sector primario, $N_p + U$. Por tanto:
+
+$$
+q = \frac{N_p}{N_p+U}
+$$
+
+Adicionalmente, en el equilibrio, la utilidad esperada de elegir el sector primario, $qw_p + (1-q)b$ debe ser igual a la utilidad esperada de escoger el sector secundario, $w_s$. Por lo que, en equilibrio:
+
+$$
+qw_p + (1-q)b = w_s
+$$
+Resolviendo para q:
+
+$$
+q = \frac{(w_s-b)}{w_p-b}
+$$
+
+Ahora, hay dos condiciones que debe satisfacer q en el equilibrio. Igualándolas:
+
+$$
+\frac{N_p}{N_p+U} = \frac{(w_s-b)}{w_p-b}
+$$
+
+Que puede ser reescrita como:
+
+$$
+N_p(w_p-b) = N_p(w_s-b) + (w_s-b)U
+$$
+
+Y resolviendo para el desempleo de equilibrio, encontramos:
+
+$$
+U = (\frac{w_p-w_s}{w_s-b})N_p
+$$
+
+#### b)
+
+**¿Cómo un incremento de $N_p$ afecta al desempleo? Explíquese intuitivamente el porqué, a pesar de que el empleo es igual a los trabajadores esperando por empleos primarios, el incrementar estos trabajos puede incrementar el desempleo.**
+
+Para determinar la manera en que un incremento del número de empleos primarios afecta al desempleo, obténgase la derivada de U con respecto de $N_p$:
+
+$$
+\frac{\delta U}{\delta N_p} = (\frac{w_p - w_s}{w_s - b}) > 0
+$$
+
+La derivada es positiva porque estamos asumiendo que $b < w_s < w_p$. Además, esta implica que un aumento en el número de empleos primarios incrementa el desempleo de equilibrio. Intuitivamente: más empleos primarios incrementan las probabilidades para las personas en este sector de conseguir empleo; sin embargo, este hecho motiva a más individuos a escoger el sector primario antes que el secundario; así, muchos más lo prefieren, tantos que el número que no consiguen un puesto aumenta.
+
+#### c)
+
+**¿Cuáles son los efectos de un incremento en el nivel de los beneficios de desempleo?**
+
+Para visualizar estos efectos, tómese la derivada de U con respecto a b:
+
+$$
+\frac{\delta U}{\delta b} = \frac{(w_p - w_s)}{(w_s - b)^2}N_p > 0
+$$
+
+Lo que indica que el desempleo aumenta si b sube. Intuitivamente: mayores beneficios al estar desempleado hacen el sector primario más atractivo; así, más individuos lo prefieren y, dado que existe un número fijo de trabajos disponibles, más personas terminarán desempleadas.
+
+\newpage
+
+## Ejercicio 2
+
+**Estudie el mercado laboral en México siguiendo estos pasos [2 horas, 0.5 puntos cada inciso]: Por favor documente su trabajo para que se pueda replicar.**
+
+```{r include=FALSE}
+
+bdanual <- read_csv("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/main/Tarea%203/Datos/bd_lab_anual.csv")
+```
+
+
+### a) 
+
+**Obtenga del INEGI una serie anual de los salarios (en términos reales) en México, calcule la serie de su tasa de cambio anual, calcule la volatilidad de dicha serie. (Serie 1)**
+
+En la siguiente gráfica se muestra la evolución del salario promedio anual de  México desde 2007 a 2020,  en pesos constantes de 2019. Se observa una caída en el año 2010, se recupera desde el año 2017. La tendencia hasta este año es decreciente. 
+
+```{r}
+salario_anual <- ts(bdanual$salario_anual_totreal, start=2007, frequency = 1)
+ts.plot (salario_anual,   xlab="Años", ylab="Salario anual promedio", main="Gráfica 2.1 Salario promedio anual en México, base 2019.", col="blue", lwd=2)
+volatil_salario<-sd(salario_anual)
+
+```
+
+Por otra parte, en la siguiente gráfica se muestra la tasa de crecimiento de este salario en México desde 2008 a 2020. La tasa de crecimiento promedio en el periodo es negativa y muy cercana a cero, con las mayores caídas (aproximadamente del 6%) en el año 2010. La volatilidad de esta tasa de crecimiento, medido por la desviación estándar es de 2.12. 
+
+```{r}
+tc_salario_anual <- growth.rate(salario_anual, lag=1)
+volatil_tc_salario<-sd(tc_salario_anual)
+ts.plot (tc_salario_anual,   xlab="Años", ylab="Tasa de crecimiento", main="Gráfica 2.2 Tasa de crecimiento del salario en México.", col="blue", lwd=2) 
+abline(h = mean(tc_salario_anual), col ="red", legend("bottomright", "Media", fill = "red"))
+abline(h = mean(tc_salario_anual)-sd(tc_salario_anual), col ="green", legend("bottomleft", "sd(2.12)", fill = "green"))
+abline(h = mean(tc_salario_anual)+sd(tc_salario_anual), col ="green", legend("bottomleft", "sd(2.12)", fill = "green"))
+```
+
+### b) 
+
+**Obtenga del INEGI una serie anual del empleo total en México, calcule la serie de su tasa de cambio anual, calcule la volatilidad de dicha serie. (Serie 2)**
+
+En la siguiente gráfica se muestra la evolución del empleo total anual de México desde 2007 a 2020, en número de personas que representan el personal ocupado total de la economía.  La tendencia es creciente, con caídas en 2008, 2010, 2014 y 2020, esta última es la más importante. 
+
+```{r}
+empleo_anual <- ts(bdanual$po_tot, start=2007, frequency = 1)
+ts.plot (empleo_anual,   xlab="Años", ylab="Empleos", main="Gráfica 2.3 Número de empleos en México de 2007 a 2020.", col="blue", lwd=2)
+volatil_empleo<-sd(empleo_anual)
+```
+
+
+Por otra parte, en la siguiente gráfica se muestra la tasa de crecimiento del número de empleos en México desde 2008 a 2020. La caída más importante de este indicador en el perido analizado es en el año 2020. La volatilidad de esta tasa de crecimiento, medido por la desviación estándar es de 2.46. 
+
+```{r}
+tc_empleo_anual <- growth.rate(empleo_anual, lag=1)
+volatil_tc_empleo<-sd(tc_empleo_anual)
+ts.plot (tc_empleo_anual,   xlab="Años", ylab="Tasa de crecimiento", main="Gráfica 2.4 Tasa de crecimiento del empleo anual en México.", col="blue", lwd=2) 
+abline(h = mean(tc_empleo_anual), col ="red", legend("topleft", "Media", fill = "red"))
+abline(h = mean(tc_empleo_anual)-sd(tc_empleo_anual), col ="green", legend("bottomleft", "sd(2.46)", fill = "green"))
+abline(h = mean(tc_empleo_anual)+sd(tc_empleo_anual), col ="green", legend("bottomleft", "sd(2.46)", fill = "green"))
+```
+
+
+
+### c) 
+
+**Obtenga del INEGI una serie del PIB en términos reales, calcule su tasa de cambio anual, calcule su volatilidad. (Serie 3)**
+
+
+En la siguiente gráfica se muestra la evolución del PIB total anual de México desde 2007 a 2020, en millones de pesos reales con año base 2013. La tendencia es creciente, con una caída importante en el año 2009 y la más severa en el 2020. 
+
+```{r}
+pib_anual <- ts(bdanual$pib_tot, start=2007, frequency = 1)
+ts.plot (pib_anual,   xlab="Años", ylab="PIB", main="Gráfica 2.5 PIB de México de 2007 a 2020,  millones de pesos.", col="blue", lwd=2)
+volatil_pib<-sd(pib_anual)
+```
+
+
+
+Por otra parte, en la siguiente gráfica se muestra la tasa de crecimiento del PIB en México desde 2008 a 2020. Se puede ver con mayor clarirdad la caída de este indicador en el año 2009 de proximadamente 5%, mientras que en el año 2020 se observa una caída de más de 8%. La volatilidad de esta tasa de crecimiento, medido por la desviación estándar es de 3.78. 
+
+```{r}
+tc_pib_anual <- growth.rate(pib_anual, lag=1)
+volatil_tc_pib<-sd(tc_pib_anual)
+ts.plot (tc_pib_anual,   xlab="Años", ylab="Tasa de crecimiento", main="Gráfica 2.6 Tasa de crecimiento del PIB anual en México.", col="blue", lwd=2) 
+abline(h = mean(tc_pib_anual), col ="red", legend("topleft", "Media", fill = "red"))
+abline(h = mean(tc_pib_anual)-sd(tc_pib_anual), col ="green", legend("bottomleft", "sd(3.78)", fill = "green"))
+abline(h = mean(tc_pib_anual)+sd(tc_pib_anual), col ="green", legend("bottomleft", "sd(3.78)", fill = "green"))
+```
+
+
+
+
+### d) 
+
+**Grafique las tres series de tasas de cambios de forma que se puedan comparar.**
+
+La siguiente gráfica muestra las tasas de crecimiento de los salarios reales, del nivel de empleos y del  PIB real. La variable más volátil es la de la  tasa de crecimiento del PIB (3.78), luego  la tasa de crecimiento del empleo (2.46) y finalmente la tasa de crecimiento del salario promedio anual (2.12). 
+
+```{r}
+tc_salario_anual<- ts(tc_salario_anual, start=2008, frequency = 1)
+tc_empleo_anual<- ts(tc_empleo_anual, start=2008, frequency = 1)
+tc_pib_anual<- ts(tc_pib_anual, start=2008, frequency = 1)
+
+
+ts.plot (tc_salario_anual, tc_empleo_anual, tc_pib_anual, gpars=list(xlab="Años", ylab="Tasas de crecimiento", main=" Gráfica 2.7 Tasas de crecimiento del empleo, salarios y PIB en México.", col=c("green","blue","red"),lwd= 2, cex.main=0.9))
+legend ('bottom', col=c("green","blue","red"),lwd=3, legend=c("Salario","Empleo","PIB"), bg='white',bty="n",cex=0.7)
+```
+
+
+
+
+### e)
+
+**Calcule la covarianza de la Serie 1 con la Serie 3 y de la Serie 2 con la Serie 3.**
+
+```{r}
+cov_sal_pib<-cov(salario_anual,pib_anual, method = c("pearson"))
+cov_tc_sal_pib<-cov(tc_salario_anual,tc_pib_anual, method = c("pearson"))
+
+cov_empleo_pib<-cov(empleo_anual,pib_anual, method = c("pearson"))
+cov_tc_empleo_pib<-cov(tc_empleo_anual,tc_pib_anual, method = c("pearson"))
+
+cor_tc_salario_pib<-cor(salario_anual,pib_anual, method = c("pearson"))
+cor_tc_empleo_pib<-cor(empleo_anual,pib_anual, method = c("pearson"))
+
+
+```
+
+
+En el siguiente cuadro podemos observar las covarianzas (por el método de Pearson) entre la tasa de crecimiento del salario y la tasa de crecimiento del PIB, así como la covarianza de la tasa de crecimiento del empleo y la tasa de crecimiento del PIB. Observemos que para el primer caso, la covarianza es negativa, mientras que en el caso de la covarianza del PIB con el empleo es positiva. 
+
+
+```{=tex}
+\begin{center}
+\textbf{Cuadro 2.1. Covarianzas de las tasas de crecimiento de salarios y empleo con el PIB.}
+\end{center}
+```
+|              Variables             | Covarianza              |
+|:----------------------------------:|:-----------------------:|
+|          Salario y PIB             |     -2.8584             |
+|          Empleo y PIB              |      3.5544             |
+
+
+
+En siguiente cuadro podemos observar el coeficiente de correlación de Pearson entre la tasa de crecimiento del salario y la tasa de crecimiento del PIB, así como el coeficiente de correlación de la tasa de crecimiento del empleo y la tasa de crecimiento del PIB. Observemos que para el primer caso, el coeficiente es negativa de -0.4936, mienttras que en el segundo caso es positiva de 0.9499 más cercana a 1.  Esto muestra que el empleo es bastante procíclico, mientras que el salario es contracíclico, aunque en un menor importancia. 
+
+```{=tex}
+\begin{center}
+\textbf{Cuadro 2.2. Correlaciones de las tasas de crecimiento de salarios y empleo con el PIB.}
+\end{center}
+```
+|              Variables             | Correlación             |
+|:----------------------------------:|:-----------------------:|
+|          Salario y PIB             |     -0.4936             |
+|          Empleo y PIB              |      0.9499             |
+
+
+
+### f) 
+
+**Explique si los resultados son o no consistentes con los hechos estilizados para EEUU que se discutieron en clase.**
+
+Los resultados muestran que para el caso de México, en el periodo 2007 a 2020, considerando las tasas de crecimiento del salario promedio anual a precios constantes de 2019, del personal ocupado total nacional y del PIB real nacional, que el empleo es muy procíclico y el salario contracíclico, aunque a un nivel menos significativo. Es decir, la tasa de crecimiento de los niveles de empleo se mueve positivamente conforme al ciclo económico, si la economía está en una etapa de crecimiento acelerado, también los niveles de empleo incrementan, por otra parte, los salarios tienden a disminuir con esta fase favorable del cíclo económico.  
+
+
+\newpage
+
+## Ejercicio 3
+
+**Contraste un modelo trivial de la determinación del salario con los datos siguiendo estos pasos: [2 horas, 0.5 puntos cada inciso]. Por favor documente su trabajo para que se pueda replicar.**
+
+### a)
+
+**Obtenga una serie del PIB $Y_t$ de la economía.**
+
+Para este inciso, se hizo uso de los datos proporcionados por el [@inegi] desde el primer trimestre de 1993 hasta el último trimestre de 2020, se trata de la serie del Producto Interno Bruto en millones de pesos y con base en precios de 2013.
+
+### b)
+
+**Obtenga una serie del capital $K_t$ de la economía (\`\`Indice de Volumen físico acumulado´´).**
+
+Para esto, se utilizó la serie de Índice de Volumen Físico acumulado del [@inegi], misma que tiene periodicidad mensual desde enero de 1993 hasta diciembre de 2020. Para asegurar la consistencia temporal con los datos anteriores, se realizaron promedios cada tres meses, con el objetivo de presentar los datos trimestralmente.
+
+### c)
+
+**Obtenga una serie del empleo $L_t$ de la economía.**
+
+Para este inciso, se unieron dos series. La primera, directamente extraída del [@inegi] muestra la Población Económicamente Activa (PEA) desde el primer trimestre de 2005 hasta el último de 2020; por otro lado, se encontró una serie de datos más antiguos, recopilados por el Centro de Estudios para las Finanzas Públicas de la Cámara de Diputados del H. Congreso de la Unión [@cefp] (y que indica como referencia al INEGI), que incluye información trimestral sobre la PEA desde el año 2000 hasta 2015. Así, la muestra total de estos datos abarca desde 2000 hasta 2020.
+
+Cabe señalar que la información disponible sobre la PEA antes de 2005 es bastante limitada, dado que la Encuesta Nacional de Ocupación y Empleo (ENOE) se comenzó a realizar desde 2005; anteriormente, los datos se registraban anualmente mediante censos de población.
+
+### d)
+
+**Cree una serie de la productividad $A_t$ de la economía a partir de asumir una función de producción $Y_t=A_tF(K,L)$, con $F(K,L)=K^{0.3}L^{0.7}$.**
+
+Como se explicó en los incisos anteriores, debido a la disponibilidad de los datos de las tres variables de interés, la serie que se utilizará en adelante contempla datos desde el año 2000 hasta el 2020.
+
+```{r}
+Base_de_datos_ejercicio_3 <- read_csv("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/main/Tarea%203/Datos/Base%20de%20datos%20ejercicio%203.csv", 
+    col_types = cols(Fecha = col_date(format = "%d/%m/%Y")))
+```
+
+```{r}
+Base_de_datos_ejercicio_3$"F(K,L)" <- Base_de_datos_ejercicio_3$`Índice de volumen físico acumulado (base 2013, promedio trimestral)`^0.3*Base_de_datos_ejercicio_3$`Población económicamente activa`^0.7
+
+```
+
+```{r}
+Base_de_datos_ejercicio_3$"Productividad A" <- Base_de_datos_ejercicio_3$`PIB en millones de pesos (base 2013)`/ Base_de_datos_ejercicio_3$"F(K,L)"
+```
+
+Para una mejor visualización e interpretación de los datos, y dada la ambigüedad sobre las unidades de medición de la recién creada variable A, es pertinente realizar un índice con ella. Para esto, y en consistencia con las series utilizadas, se fijará al último trimestre de 2013 como la base igual a 100. A continuación se muestran las estadísticas descriptivas y gráfica de este nuevo índice:
+
+```{r}
+Base_de_datos_ejercicio_3$"Índice Productividad" <- Base_de_datos_ejercicio_3$`Productividad A`*100/16.63102398528814
+```
+
+```{r include=FALSE}
+mean(Base_de_datos_ejercicio_3$`Índice Productividad`)
+max(Base_de_datos_ejercicio_3$`Índice Productividad`)
+min(Base_de_datos_ejercicio_3$`Índice Productividad`)
+```
+
+```{=tex}
+\begin{center}
+\textbf{Cuadro 3.1. Estadísticas descriptivas del índice de productividad trimestral.}
+\end{center}
+```
+
+| Estadística 	| Valor    	|
+|-------------	|----------	|
+| Media       	| 98.61482 	|
+| Máximo      	| 107.256  	|
+| Mínimo      	| 91.72929 	|
+
+```{r}
+
+serie3.1 <- ts(Base_de_datos_ejercicio_3, start= c(2000,2), frequency = 4)
+
+productividad <- serie3.1[,7]
+
+ts.plot (productividad, gpars=list(xlab="Trimestres", ylab="Índice", main="Gráfica 3.1. Índice de productividad trimestral, 2000 - 2020.",  col=5:1, lwd=1))
+```
+
+### e)
+
+**Cree una serie contrafactual del salario que se debió de haber observado si el salario fuera el ingreso marginal del trabajo** $A_tF_L(K_t,L_t)$.
+
+Asumiendo que el salario fuera igual al producto marginal del trabajo, entonces tenemos que:
+
+$$
+Salario ~ contrafactural =PmgL = \frac{\delta Y}{\delta L} = \frac{\delta (AK^{0.3}L^{0.7})}{\delta L} = 0.7A(\frac{K}{L})^{0.3}
+$$
+
+A continuación se muestra las estadísticas descriptivas y gráfica del salario contrafactual estimado:
+
+```{r}
+Base_de_datos_ejercicio_3$"Salario contrafactual" <- Base_de_datos_ejercicio_3$`Índice Productividad`*0.7*Base_de_datos_ejercicio_3$`Índice de volumen físico acumulado (base 2013, promedio trimestral)`^0.3/Base_de_datos_ejercicio_3$`Población económicamente activa`^0.3
+```
+
+```{r include=FALSE}
+mean(Base_de_datos_ejercicio_3$`Salario contrafactual`)
+max(Base_de_datos_ejercicio_3$`Salario contrafactual`)
+min(Base_de_datos_ejercicio_3$`Salario contrafactual`)
+```
+
+```{=tex}
+\begin{center}
+\textbf{Cuadro 3.2. Estadísticas descriptivas del valor del salario contrafactual, por trimestre.}
+\end{center}
+```
+
+| Estadística 	| Valor    	|
+|-------------	|----------	|
+| Media       	| 1.350293 	|
+| Máximo      	| 1.442441 	|
+| Mínimo      	| 1.229052 	|
+
+```{r}
+serie3.1 <- ts(Base_de_datos_ejercicio_3, start= c(2000,2), frequency = 4)
+
+salariocontrafactual <- serie3.1[,8]
+
+ts.plot (salariocontrafactual, gpars=list(xlab="Trimestres", ylab="Índice", main="Gráfica 3.2. Salario contrafactual, 2000 - 2020.",  col=5:1, lwd=1))
+```
+
+### f)
+
+**Compare el salario observado con el salario contrafactual a la luz de los hechos estilizados y las teorías descritas en clase.**
+
+Para fines de la adecuada comparación entre el salario real observado en México y el salario contrafactual estimado en el inciso anterior, se utilizó las remuneraciones en el sector manufacturero reportadas por el [@inegi] desde 2007 hasta 2020, mismas que tienen base en el año 2013. Además, la serie del salario contrafactual fue transformada en un índice base 2013.
+
+```{r}
+Salarios_ejercicio_3 <- read_csv("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/main/Tarea%203/Datos/Salario%20real%202007-2020.csv", 
+    col_types = cols(Fecha = col_date(format = "%d/%m/%Y")))
+```
+
+```{r}
+Base_de_datos_ejercicio_3$"Índice Salario contrafactual" <- Base_de_datos_ejercicio_3$`Salario contrafactual`*100/1.3534931427529
+```
+
+```{r}
+serie3.2 <- ts(Salarios_ejercicio_3, start= c(2007,1), frequency = 4)
+
+salarioreal <- serie3.2[,2]
+
+serie3.3 <- ts(Base_de_datos_ejercicio_3, start= c(2000,2), frequency = 4)
+
+salariocontrafactual1 <- serie3.3[,9]
+
+ts.plot (salariocontrafactual1, salarioreal, gpars=list(xlab="Trimestres", ylab="Índice", main="Gráfica 3.3. Salarios contrafactual y observado, 2000 - 2020.",  col=7:6, lwd=1))
+legend("topleft", bty="n", lty=c(1,1), col=7:6,
+       legend=c(" Salario contrafactual ", "Salario real "))
+
+```
+
+Como puede observarse en la gráfica, el periodo pertinente para comparar ambos salarios va desde 2007 hasta 2020, de manera trimestral, y debido a la disponibilidad de datos sobre salarios reales ya explicada.
+
+De manera general, se observan 3 grandes comportamientos:
+
+1.  **Crisis del 2008:** Puede verse que, de acuerdo al salario contrafactual calculado a partir de la función $Y_t = A_tK^{0.3}L^{0.7}$, este debió haberse contraído muchísimo más que lo observado. Como se explicó en los incisos anteriores, el salario contrafactual está cercanamente relacionado con el índice de productividad, que a su vez se obtiene a partir de las variables del PIB, Población Económicamente Activa (PEA) y el Índice de Volumen Físico Acumulado (capital).
+2.  **Periodo 2010 - 2019:** Durante este periodo resaltan dos elementos; en primer lugar, una tendencia relativamente lenta, pero consistente, a la alza del salario contrafactual calculado y también del observado; por otro lado, una relativa similitud en los movimientos de ambos salarios.
+3.  **2019 - 2020:** Derivado de la pandemia por Covid-19 y del crecimiento económico escaso que le precedió, el salario contrafactual se comporta como uno esperaría, esto es, presenta una caída importante respecto a la tendencia precedente, con una ligera recuperación en los últimos meses de 2020. Por su parte, el salario real observado muestra, de hecho, una continuación de la tendencia positiva de aumento, exceptuando el segundo trimestre de 2020, donde se exhibe una caída sustantiva de este, para luego volverse a recuperar.
+
+Todos estos comportamientos son consistentes con los modelos de contratos implícitos, los cuales parten de la hipótesis de que las empresas son menos adversas al riesgo que los trabajadores, lo que implica negociaciones salariales y contractuales relativamente estables. De hecho, un supuesto nuclear de estos modelos es que la empresa provee de un salario constante al trabajador, el cual es más estable que su productividad laboral y se sostiene durante las contingencias económicas.
+
+Si bien el salario real observado no se mantiene constante, sí sigue una tendencia relativamente estable a la alza y no presenta modificaciones abruptas ante coyunturas económicas importantísimas como la crisis de 2008 o la pandemia por Covid-19.
+
+\newpage
+
+## Ejercicio 4. 
+
+**Desarrolle su intuición cuantitativa sobre la informalidad laboral en México siguiendo estos pasos [3 horas, 0.5 puntos cada inciso]. Por favor documente su trabajo para que se pueda replicar.**
+
+### a) 
+
+**Obtenga la Matriz Hussmans para México, del INEGI, para algún trimestre de 2019.**
+
+**Descripción de la Matriz Hussmanns:**
+
+La Matriz Hussmanns es un arreglo que nos permite visualizar conjuntamente y delimitar la ocupación y el empleo informal en una organización conceptual por bloques a partir de la elaboración de categorías particulares. Para este fin la matriz se organiza de tal manera que los renglones ordenen a la ocupación (personas) y al empleo (trabajos) desde la perspectiva de la naturaleza de las unidades económicas, mientras que las columnas clasifican bajo el enfoque "status del empleo", posición en el trabajo o posición en la ocupación. 
+
+
+Esta matriz está estructurada de la siguiente forma:
+
+
+```{r, fig.width = 15, fig.height = 12}
+imagen4.1 <- load.image("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/main/Tarea%203/Datos/4a_1_Imagen_Matriz_Hussmanns.PNG")
+
+plot(imagen4.1, main = "Figura 4.1. Matriz de Hussmanns para México.", cex.main = 5, axes = FALSE)
+
+
+```
+
+Tenemos la siguiente clasificación.[^1] En los renglones vamos a clasificar desde la perspectiva de la naturaleza de la unidad económica. De la celdilla 1 a 5 tenemos a todos los roles o status ocupacionales que participan en el sector informal como parte de la ocupación informal: Celdillas 1, 2 y 5 corresponden al empleo dependiente que está ocupado en el sector informal, es decir: Celda 1: Trabajadores asalariados; Celda 2: Trabajadores con percepciones no salariales; Celda 5: Trabajadores no remunerados. Las casillas 3 y 4 representan los trabajadores independientes que se entienden como los encargados de estas unidades económicas. En la matriz ninguna posición en la ocupación dentro del sector informal puede ser considerada como formal.
+
+[^1]: Esta clasificación se obtuvo de la siguiente obra publicada por el INEGI:  331.10723 Instituto Nacional de Estadística y Geografía (México).
+La informalidad laboral : Encuesta Nacional de Ocupación y Empleo : marco 
+conceptual y metodológico / Instituto Nacional de Estadística y Geografía.-- México : 
+INEGI, c2014.  vii, 59 p. ISBN 978-607-739-109-8. 
+
+
+Por otro lado, cuando la unidad económica tiene características análogas a las del Sector Informal como es el caso de la agricultura de subsistencia, a los trabajadores independientes, se les considera como parte de la Informalidad en su sentido amplio o desde la perspectiva laboral (Celdilla 13), es decir, la representación de la agricultura de subsistencia es vinculada a los trabajadores por cuenta propia y por lo tanto, estos trabajadores serán catalogados en la ocupación informal y si operan con negocios con características análogas a las empresas constituidas, serán parte de la ocupación formal (celdilla IX), es decir, los empleadores en el ámbito agropecuario, entrarán a la ocupación formal.
+
+Para el resto de las modalidades ocupacionales o posiciones en la ocupación, lo que define su clasificación es la posibilidad de ejercer o no derechos laborales y no la pertenencia a tal o cual unidad económica. Entonces en sentido amplio, es decir, desde la perspectiva laboral, se considera que todos los trabajadores familiares o aprendices que apoyan en los procesos de generación de bienes y servicios al estar fuera de la posibilidad de ejercer derechos laborales, todos son parte de la informalidad (las celdillas 5, 10 y 14).
+
+A continuación describimos el resultado de cada cedilla, separando las celdillas que corresponden al empleo informal y las del empleo formal.
+
+
+**Empleo informal:**
+
+
+**Celdilla 1.-** Trabajadores asalariados que trabajan en una unidad económica clasificada en el sector informal.
+
+**Celdilla 2.-** Trabajadores subordinados que únicamente reciben percepciones no salariales y pertenecen a una unidad económica del sector informal.
+
+**Celdilla 3.-** Si la unidad económica opera en el sector informal, el estatus del dueño o empleador como responsable de ésta, también es informal.
+
+**Celdilla 4.-** Si el negocio del trabajador por cuenta propia pertenece al sector informal, este trabajador se considera informal.
+
+**Celdilla 5.-** También se cuentan como parte del empleo informal todos aquellos individuos que laboran dentro del sector informal y no reciben ningún tipo de remuneración.
+
+**Celdilla 6.-** Si el trabajador doméstico es asalariado, pero el vínculo laboral no le brinda acceso a la seguridad social, se considera empleo informal.
+
+**Celdilla 7.-** Si la remuneración que recibe el trabajador doméstico es no salarial y no cuenta con prestaciones de seguridad social, se clasifica dentro del empleo informal.
+
+**Celdilla 8.-** Si el trabajador subordinado pertenece a una empresa formalmente constituida pero no recibe prestaciones de seguridad social, se considera que tiene un empleo informal.
+
+**Celdilla 9.-** Si el trabajador recibe remuneraciones no salariales y no recibe prestaciones de seguridad social, el trabajo se considera informal, aun cuando se realice dentro instituciones o empresas constituidas.
+
+**Celdilla 10.-** Todo trabajo no remunerado se clasifica como empleo informal, no obstante se desarrolle en empresas o instituciones formalmente constituidas.
+
+**Celdilla 11.-** Trabajadores asalariados del sector agropecuario, se clasifican en el empleo informal, si no cuentan con prestaciones de seguridad social. 
+
+**Celdilla 12.-** También es clasificado como empleo informal el trabajo agropecuario subordinado que recibe percepciones no salariales y no cuenta con prestaciones de seguridad social.
+
+**Celdilla 13.-** Todos los trabajadores por cuenta propia del sector agropecuario, son considerados empleados informales.
+
+**Celdilla 14.-** El trabajo no remunerado en el sector agropecuario también se clasifica como empleo informal. 
+
+<p>&nbsp;</p>
+
+**Empleo Formal**
+
+
+**Celdilla I.-** Los trabajadores domésticos que reciben un salario y cuenta con prestaciones de seguridad social por su trabajo, se consideran empleados formales.
+
+**Celdilla II.-** También se considera como formal al trabajador doméstico que recibe únicamente percepciones no salariales, siempre y cuando se le brinde prestaciones de seguridad social.
+
+**Celdilla III.-** Si el trabajador asalariado cuenta con prestaciones de seguridad social por parte de su trabajo y labora en una institución o empresa constituida, se clasifica como empleo formal.
+
+**Celdilla IV.-** También es un empleo formal el que realiza un trabajador dentro de instituciones o empresas constituidas, aunque reciba únicamente percepciones no salariales, siempre y cuando el trabajador cuente con prestaciones de seguridad social derivadas de su trabajo.
+
+**Celdilla V.-** Los empleadores en cualquier unidad económica constituida formalmente, son parte del empleo formal.
+
+**Celdilla VI.-** Los que trabajan por su propia cuenta en negocios formales, en el gobierno o cualquier otra institución constituida, se clasifican dentro del
+empleo formal.
+
+**Celdilla VII.-** Si el vínculo laboral del trabajador asalariado agropecuario, incluye prestaciones de seguridad social, se considera como parte del empleo formal.
+
+**Celdilla VIII.-** Si la remuneración recibida en el sector agropecuario no es salarial, pero sí cuenta con prestaciones de seguridad social por ese trabajo, el trabajador forma parte del empleo formal. 
+
+**Celdilla IX.-** Si el negocio agropecuario opera con características de una empresa formalmente constituida, el dueño se considera trabajador formal.
+
+Obsérvese que las celdillas en blanco en la matriz significan imposibilidades conceptuales.
+
+En las columnas Subtotal por perspectiva de la unidad económica y/o laboral se contabiliza el total de empleo según su condición de informalidad para cada tipo de unidad económica, por lo que representan la suma de los valores dentro de cada celda válida según sea formal o informal en determinada unidad económica: La **Celda A** representa la suma del total de la ocupación en el sector informal, además cabe decir que para este caso particular sólo aplica el criterio de la unidad económica, mientras que en las **celdas B y C** confluye esencialmente el criterio de las condiciones laborales. Para las **celdas D y E** se incluyen ambos 
+tipos de criterios, el de la unidad económica para los independientes y el laboral para los dependientes, esta misma situación se presenta en las **celdas F y G**.
+
+<p>&nbsp;</p>
+
+**Parte práctica**
+
+Para este ejercicio usamos los datos de la Matriz Hussmanns que proporciona la página oficial del INEGI correspondiente al trimestre 4 (Octubre - Diciembre) del año 2020 a nivel nacional, es decir para la población ocupada (hombres y mujeres) mayores de 15 años. Cabe mencionar que el INEGI realizó esta matriz en base a los datos de la Encuesta Nacional de Ocupación y Empleo (Nueva Edición) $(ENOE^N)$.
+
+```{r, fig.width=15, fig.height=12}
+imagen4.2 <- load.image("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/main/Tarea%203/Datos/4a_2_Matriz_Hussmanns_Inegi.PNG")
+
+plot(imagen4.2, main = "Figura 4.2. Matriz de Hussmanns para México, \n último trimestre 2020.", axes = FALSE, cex.main = 0.8)
+```
+
+
+```{r include=FALSE}
+#Subo los datos. Estos datos corresponden a la matriz hussmanns que proporciona el INEGI, que pertenecen a la imagen de arriba.
+
+
+library(readxl)
+dataej4b <- read_csv("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/main/Tarea%203/Datos/dataej4b.csv")
+
+```
+
+
+### b) 
+
+**A partir de la tabla, averigüe qué proporción de los trabajadores trabaja en el “sector informal” de la economía.**
+
+Sabemos que la proporción de trabajadores que trabaja en el sector informal $(\%Ti)$ es igual al número de trabajadores que trabajan en el sector informal $(Ti)$ dividido entre el número del total de trabajadores $(T)$ en tanto por 1 o multiplicado por 100 para tener la proporción en porcentaje.
+
+
+```{r include=FALSE}
+b_4 <- dataej4b[5,11]/dataej4b[6,13]
+```
+
+
+En la tabla podemos observar que el total de los trabajadores (Población ocupada mayor de 15 años) es de 53,331,429 (el valor que se encuentra en la casilla c) y el total de los trabajadores que trabajan en el "sector informal" es de 29,645,893 (el valor que se encuentra en la casilla a). 
+
+
+$$\%Ti=\left( \frac{Ti}{T} \right) * 100  \ \ \ = \ \ \ \left( \frac{29,645,893}{53,331,429} \right) * 100 \ \ \ = \ \ \ \  0.5558803*100 \ \ \ = \ \ \ \  55.58803  \ \%$$
+
+Por lo tanto, según los datos de la tabla, el 55.58 % de los trabajadores trabaja en el "sector informal".
+
+
+### c)
+
+**A partir de la tabla, averigüe qué proporción de los trabajadores del sector formal son informales.**
+
+En el sector formal tenemos el trabajo doméstico remunerado, empresas, gobierno e instituciones y el ámbito agropecuario, sin embargo, cuando los trabajadores no tienen la posibilidad de ejercer derechos laborales como seguridad social se les considera parte de la informalidad, a pesar de pertenecer al sector formal. Tales casos se representan con las casillas 6, 7, 8, 9, 10, 11, 12, 13 y 14.
+
+```{r}
+
+# Creo la variable c que es igual a la suma de los valores de renglones del 2 al 4 de la columna 1 + la suma de los valores de los renglones 2 al 4 de la fila 3. 
+c_4 <- colSums (dataej4b[2:4 , 1]) + colSums (dataej4b[2:4,3]) 
+
+#a la misma variable le sumo el valor que se encuentra en la posición (4,7)
+c_4 <- c_4 + dataej4b[4,7] 
+
+#Ahora le sumo los valores que se encuentran del renglón 3 al cuatro dela columna 9
+c_4 <- c_4 + colSums(dataej4b[3:4,9])
+
+#Hasta este momento, c_4 representa la suma de todos los trabajadores del sector formal que son informales.
+
+#Obtengo la proporción de trabajadores del sector formal que son informales dividiendo este número entre el total de trabajadores.
+
+c_4_2 <- c_4 / dataej4b[6,13]
+
+
+```
+
+
+La suma total de los valores que se encuentran en estas casillas da un total de 14,792,527 trabajadores del sector formal que son informales $Tfi$. Dividiendo esta cantidad entre el número total de trabajadores de 53,331,429, obtenemos la proporción de trabajadores del sector formal que son informales $\%Tfi$:
+
+
+$$\%Tfi=\left( \frac{Tfi}{T} \right) * 100  \ \ \ = \ \ \ \left( \frac{14,792,527}{53,331,429} \right) * 100 \ \ \ = \ \ \ \  0.2773698*100 \ \ \ = \ \ \ \  27.73698  \ \%$$
+Vemos que el 27.7 % de los trabajadores en economía nacional trabajan en el sector formal, sin embargo, se encuentran dentro de la informalidad, puesto que no cuentan con derechos laborales.
+
+
+```{r}
+# Número de trabajadores que conforman el sector formal
+
+c_4_3 <- colSums(dataej4b[2:4,13])
+```
+
+Por otro lado, el sector formal está conformado por 38,478,063 trabajadores, de los cuales, como vimos 14,792,527 pertenecen a la informalidad, es decir, el 38.4 % de los trabajadores del sector formal, son informales.
+
+
+### d)
+
+**Averigüe con datos del INEGI cuáles son las industrias formales con mayor proporción de trabajadores informales y los estados de la república con mayor proporción de trabajadores informales.**
+
+A continuación se muestra un fragmento de los datos obtenidos por el INEGI. Podemos observar que el sector primario formal, es decir, industrias formales dedicadas a la agricultura, ganadería, silvicultura, caza y pesca tienen la mayor proporción de trabajadores informales, con una proporción muy elevada, puesto que el 87.12 % de los trabajadores del sector primario formal, pertenecen a la informalidad, lo cual nos muestra que queda mucho trabajo en materia de política económica para este sector. 
+
+```{r, fig.width=12, fig.height=7}
+imagen4.3 <- load.image("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/main/Tarea%203/Datos/4d_Imagen.PNG")
+
+plot(imagen4.3, main = "Figura 4.3. Proporción de trabajadores informales en el sector formal.", axes = FALSE, cex.main = 0.8)
+```
+
+En la siguiente tabla podemos observar la proporción de trabajadores informales en cada Estado de la República de manera decreciente. Oaxaca con 78% de trabajadores informales es el Estado con mayor proporción de informalidad y continua Guerrero y Chiapas, entonces es destacable el hecho de que al sur del país se concentra la mayor proporción de trabajadores informales alcanzando altos porcentajes y al norte la menor proporción de trabajadores informales.
+
+```{r, fig.width=15, fig.height=12}
+imagen4.4 <- load.image("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/main/Tarea%203/Datos/4d_2_2.PNG")
+
+plot(imagen4.4, main = "Figura 4.4. Proporción de trabajadores informales por entidad federativa.", axes = FALSE, cex.main = 0.8)
+```
+
+
+### e)
+
+**Obtenga una medida de salario por industria y grafique el nivel de informalidad contra el salario.**
+
+
+Para este inciso obtuvimos el salario mensual para cada industria o sector de la economía con factor de expansión trimestral extrayendo información de la base de datos de SDEM (Sociodemográfico) de la "Encuesta Nacional de Ocupación y Empleo, Nueva edición $(ENOE^N)$ del cuarto trimestre de 2020. A través de las variables C_OCU11C (Clasificación de la población por condición de ocupación) e ingocup (ingreso mensual) y con el factor de expansión trimestral obtuvimos el ingreso promedio por actividad económica que podemos observar en la siguiente tabla, junto con la proporción de trabajadores informales de la economía. Cabe destacar que el ingreso mensual es un promedio ponderado con el factor de expansión trimestral que contiene la base de datos y que corresponde a todo el sector, independientemente de que los trabajadores estén dentro de la formalidad o de la informalidad.
+
+```{r,fig.width=13, fig.height=10}
+imagen4.5 <- load.image("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/main/Tarea%203/Datos/4d_2_2.PNG")
+
+plot(imagen4.5, main = "Figura 4.5. Salario por industria e informalidad.", axes = FALSE, cex.main = 0.8)
+```
+
+
+
+```{r include=FALSE}
+#Subo los datos. Estos datos corresponden a la imagen de arriba. 
+
+library(readxl)
+dataej4e <- read_csv("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/main/Tarea%203/Datos/dataej4e.csv")
+
+```
+
+
+En la siguiente gráfica cada punto  representa un sector o industria de México en el cuarto trimestre de 2020 y podemos observar que existe una relación negativa entre la proporción de trabajadores informales en la economía y el nivel de salario. 
+
+
+```{r, fig.width=5, fig.height=3}
+
+# Grafico los puntos ($\% \Delta Y_t$,$\% \Delta I_t$) poniendo la inversión en el eje la ordenadas
+
+scatter.smooth(x=dataej4e$ptisf, y=dataej4e$Ingreso, xlab="Proporción de trabajadores informales en la economía mexicana", ylab="Salario (pesos)", main="Gráfica 4.1. Nivel de informalidad y salario. ", col="magenta", lwd=4, cex=0.5)
+
+
+```
+
+
+### f)
+
+**Averigue si la tasa de informalidad (la proporción, del total de personas ocupadas, que trabajan informalmente) se comportó de forma “procíclica” o “contracíclica” durante los primeros meses de esta pandemia y contrástelo con el comportamiento durante crisis anteriores (1994-5 y 2008-9).**
+
+```{r, fig.width=15, fig.height=12}
+imagen4.6 <- load.image("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/main/Tarea%203/Datos/4f_Matriz_Hussmanns2008_Inegi.PNG")
+
+plot(imagen4.6, main = "Figura 4.6. Matriz Hussmans del cuarto trimestre de 2008.", axes = FALSE, cex.main = 0.8)
+```
+
+
+```{r include=FALSE}
+#Subo los datos. Estos datos corresponden a la matriz hussmanns que proporciona el INEGI, que pertenecen a la imagen de arriba.
+
+
+library(readxl)
+dataej4f <- read_csv("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/main/Tarea%203/Datos/dataej4f.csv")
+
+```
+
+```{r}
+#Creo la variabla f_4 (ejercicio 4, inciso f), el cuál corresponde a la suma de los valores del renglón 2 al 4 de la columna 11
+f_4_1 <- colSums (dataej4f[1:4 , 11])
+
+#Divido este valor que representa el total de trabajadores del sector formal que son informales, entre el número de trabajadores que conformal el sector formal
+
+f_4_2 <- f_4_1 / colSums(dataej4f[1:4,13])
+
+```
+
+Para el caso de la crisis de 1994-5 no se tienen datos, ya que la ENOE inició su levantamiento en 2005. A continuación se muestra la Matriz Hussmanns para el cuarto trimestre del año 2008. La tasa de informalidad para este año fue de 58.46%, que es un poco más alta que en el 2020 (55.58%).
+
+
+
+```{r include=FALSE}
+#Subo datos. Estos datos corresponden a la tasa de ocupación del sector informal (TOSI) y a la tasa de informalidad laboral (TIL) con datos trimestrales a partir del 2005 al primer trimestre de 2020, obtenidos del INEGI con el fin de ver el comportamiento de la informalidad durante las crisis.
+
+library(readxl)
+dataej4f_2 <- read_csv("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/main/Tarea%203/Datos/dataej4f_2.csv")
+
+#Convierto estas variables en series de tiempo
+
+TOSI <- ts(dataej4f_2$TOSI, start=2005, frequency = 4)
+TIL <- ts(dataej4f_2$TIL, start=2005, frequency = 4)
+
+```
+
+En febrero de 2020 se registró el primer caso de Covid-19 en México y para el 30 de abril los casos habían aumentado exponencialmente. Podemos observar en nuestra gráfica que la tasa de informalidad se comportó de manera contracíclica al igual que durante la crisis anterior de 2008-9, ya que durante las crisis aumenta la tasa de informalidad laboral, lo que a su vez implica que disminuye el empleo formal. Podemos observar que en época de crisis aumenta tanto la tasa de informalidad laboral, como también la tasa de ocupación en el sector informal.
+
+```{r}
+ts.plot (TIL, xlab="trimestres", ylab="porcentaje", main="Gráfica 4.2 Tasa de informalidad laboral.", col="blue")
+```
+
+
+```{r}
+ts.plot (TOSI, xlab="trimestres", ylab="porcentaje", main="Gráfica 4.3 Tasa de ocupación del sector informal.", col="blue")
+```
+
+
+### g)
+
+**Enuncie algunas conclusiones tentativas sobre los resultados que obtuvo, relacionándolas con los modelos discutidos en clase.**
+
+En este ejercicio con el apoyo de la Matriz Hussmanns pudimos alcanzar una mayor comprensión de la organización conceptual que delimita al empleo informal del formal. Este paso fue importante para describir las tasas de informalidad del empleo en México, encontrando que en el sector primario es donde se encuentra el mayor porcentaje de trabajadores informales del sector formal, para lo cual destacan los Estados del sur del país en la proporción de informalidad.
+
+Comparando la informalidad con el salario, nos dimos cuenta que conforme mayor sea la proporción de informalidad, menores son los salarios. Esto coincide con el modelo de Shapiro Stiglitz, puesto que como vimos en la descripción de la Matriz Hussmanns, el sector informal incluye bastantes unidades pequeñas en las que hay mayor posibilidad de monitorear o supervisar a sus empleados, por ejemplo los trabajadores por cuenta propia, la agricultura de subsistencia y los trabajadores familiares o en el caso del sector formal los trabajadores que no cuentan con la posibilidad de ejercer derechos laborales al tener una menor probabilidad de seguir empleado, podemos pensar, que se esfuerza más con el mismo monitoreo que un empleado formal lo cual puede ser una buena explicación del porqué los salarios son más bajos.
+
+Otra conclusión a la que llegamos es que en épocas de crisis el desempleo es contracíclico, y esto lo observamos porque aumenta significativamente tanto la tasa de ocupación del sector informal, así como la tasa de informalidad laboral, lo cual coincide con uno de los hechos estilizados que hemos estudiado en los modelos discutidos en clase.
+
+# Referencias
+
+<!-- <div id="refs"></div> -->
