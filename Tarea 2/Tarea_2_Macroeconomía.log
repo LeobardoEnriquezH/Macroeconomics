@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.12) (preloaded format=pdflatex 2023.1.15)  21 JAN 2023 17:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.12) (preloaded format=pdflatex 2023.1.15)  17 SEP 2023 22:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -99,7 +99,17 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)) (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/lm\lmodern.sty
+)) (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+) (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+) (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks21
+\inpenc@posthook=\toks22
+) (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/base\textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+) (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/lm\lmodern.sty
 Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
@@ -133,20 +143,6 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
-) (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
-Package: iftex 2022/02/03 v1.0f TeX engine tests
-) (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
-Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 11
-2.
-(C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd
-File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)) (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
-Package: inputenc 2021/02/14 v1.3d Input encoding file
-\inpenc@prehook=\toks21
-\inpenc@posthook=\toks22
-) (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/base\textcomp.sty
-Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
 ) (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/upquote\upquote.st
 y
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
@@ -668,6 +664,11 @@ File: bkm-pdftex.def 2020-11-06 v1.29 bookmark driver for pdfTeX (HO)
 )) (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/xurl\xurl.sty
 Package: xurl 2022/01/09 v 0.10 modify URL breaks
 )
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 12
+4.
+(C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd
+File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
 (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-
 pdftex.def
 File: l3backend-pdftex.def 2022-10-26 L3 backend support: PDF output (pdfTeX)
@@ -739,36 +740,36 @@ LaTeX Warning: Label `' multiply defined.
 )
 \openout1 = `Tarea_2_Macroeconomía.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Info: Redefining \microtypecontext on input line 121.
-Package microtype Info: Applying patch `item' on input line 121.
-Package microtype Info: Applying patch `toc' on input line 121.
-Package microtype Info: Applying patch `eqnum' on input line 121.
-Package microtype Info: Applying patch `footnote' on input line 121.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Info: Redefining \microtypecontext on input line 124.
+Package microtype Info: Applying patch `item' on input line 124.
+Package microtype Info: Applying patch `toc' on input line 124.
+Package microtype Info: Applying patch `eqnum' on input line 124.
+Package microtype Info: Applying patch `footnote' on input line 124.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 121.
+LaTeX Info: Redefining \showhyphens on input line 124.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -843,13 +844,13 @@ Package caption Info: rotating package is loaded.
 Package caption Info: threeparttable package is loaded.
 Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Info: Redefining \. on input line 121.
-LaTeX Info: Redefining \% on input line 121.
-Package hyperref Info: Link coloring OFF on input line 121.
+LaTeX Info: Redefining \. on input line 124.
+LaTeX Info: Redefining \% on input line 124.
+Package hyperref Info: Link coloring OFF on input line 124.
 <colmex.jpg, id=3, 536.0025pt x 263.48438pt>
 File: colmex.jpg Graphic file (type jpg)
 <use colmex.jpg>
-Package pdftex.def Info: colmex.jpg  used on input line 129.
+Package pdftex.def Info: colmex.jpg  used on input line 132.
 (pdftex.def)             Requested size: 469.75348pt x 230.91812pt.
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/lmr/m/sc/10'.
@@ -858,32 +859,32 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/lmr/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
-59.
+62.
 (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-59.
+62.
 (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-159.
+162.
 (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-159.
+162.
 (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 159.
+(Font)              <10> on input line 162.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 159.
+(Font)              <7> on input line 162.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 159.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 159
+(Font)              <5> on input line 162.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 162
 .
 (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -891,7 +892,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 159
+LaTeX Font Info:    Trying to load font information for U+msb on input line 162
 .
 (C:\Users\Leobardo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -909,7 +910,7 @@ LaTeX Info: Redefining \% on input line 1.
 \openout3 = `Tarea_2_Macroeconomía.toc'.
 
 [1] [2] [3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 327--328
+Underfull \hbox (badness 10000) in paragraph at lines 330--331
 
  []
 
@@ -920,7 +921,7 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-2-1.pdf Graphic f
 ile (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-2-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-2-1.pdf  used on input line 559.
+k-2-1.pdf  used on input line 562.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 <Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-3-1.pdf, id=134, 433.6
 2pt x 252.945pt>
@@ -928,7 +929,7 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-3-1.pdf Graphic f
 ile (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-3-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-3-1.pdf  used on input line 591.
+k-3-1.pdf  used on input line 594.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 [9 <./Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-2-1.pdf>] [10 <./
 Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-3-1.pdf>]
@@ -938,7 +939,7 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-4-1.pdf Graphic f
 ile (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-4-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-4-1.pdf  used on input line 643.
+k-4-1.pdf  used on input line 646.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 [11 <./Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-4-1.pdf>]
 <Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-9-1.pdf, id=167, 433.6
@@ -947,7 +948,7 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-9-1.pdf Graphic f
 ile (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-9-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-9-1.pdf  used on input line 713.
+k-9-1.pdf  used on input line 716.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 <Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-10-1.pdf, id=168, 433.
 62pt x 252.945pt>
@@ -955,7 +956,7 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-10-1.pdf Graphic
 file (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-10-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-10-1.pdf  used on input line 715.
+k-10-1.pdf  used on input line 718.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 [12 <./Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-9-1.pdf>]
 <Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-11-1.pdf, id=183, 433.
@@ -964,7 +965,7 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-11-1.pdf Graphic
 file (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-11-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-11-1.pdf  used on input line 717.
+k-11-1.pdf  used on input line 720.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 [13 <./Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-10-1.pdf> <./Tar
 ea_2_Macroeconomía_files/figure-latex/unnamed-chunk-11-1.pdf>]
@@ -974,23 +975,23 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-13-1.pdf Graphic
 file (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-13-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-13-1.pdf  used on input line 768.
+k-13-1.pdf  used on input line 772.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 [14 <./Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-13-1.pdf>] [15]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 863.
+(Font)              <8> on input line 867.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 863.
+(Font)              <6> on input line 867.
 
-Overfull \hbox (41.3254pt too wide) in paragraph at lines 863--887
+Overfull \hbox (41.3254pt too wide) in paragraph at lines 867--891
  [][] 
  []
 
 
-LaTeX Warning: Command \' invalid in math mode on input line 919.
+LaTeX Warning: Command \' invalid in math mode on input line 923.
 
 [16]
-Overfull \hbox (56.1033pt too wide) in paragraph at lines 959--983
+Overfull \hbox (56.1033pt too wide) in paragraph at lines 963--987
  [][] 
  []
 
@@ -999,7 +1000,7 @@ Overfull \hbox (56.1033pt too wide) in paragraph at lines 959--983
 ] [21
 
 ] [22] [23]
-Overfull \hbox (32.60916pt too wide) in paragraph at lines 1477--1502
+Overfull \hbox (32.60916pt too wide) in paragraph at lines 1481--1506
  [][] 
  []
 
@@ -1018,7 +1019,7 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-75-1.pdf Graphic
 file (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-75-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-75-1.pdf  used on input line 2102.
+k-75-1.pdf  used on input line 2108.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 <Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-76-1.pdf, id=320, 433.
 62pt x 252.945pt>
@@ -1026,7 +1027,7 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-76-1.pdf Graphic
 file (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-76-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-76-1.pdf  used on input line 2112.
+k-76-1.pdf  used on input line 2118.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 [33 <./Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-75-1.pdf>]
 <Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-77-1.pdf, id=332, 433.
@@ -1035,7 +1036,7 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-77-1.pdf Graphic
 file (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-77-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-77-1.pdf  used on input line 2125.
+k-77-1.pdf  used on input line 2131.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 [34 <./Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-76-1.pdf> <./Tar
 ea_2_Macroeconomía_files/figure-latex/unnamed-chunk-77-1.pdf>]
@@ -1045,7 +1046,7 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-78-1.pdf Graphic
 file (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-78-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-78-1.pdf  used on input line 2134.
+k-78-1.pdf  used on input line 2140.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 <Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-80-1.pdf, id=350, 433.
 62pt x 252.945pt>
@@ -1053,7 +1054,7 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-80-1.pdf Graphic
 file (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-80-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-80-1.pdf  used on input line 2143.
+k-80-1.pdf  used on input line 2149.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 [35 <./Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-78-1.pdf> <./Tar
 ea_2_Macroeconomía_files/figure-latex/unnamed-chunk-80-1.pdf>]
@@ -1063,7 +1064,7 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-83-1.pdf Graphic
 file (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-83-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-83-1.pdf  used on input line 2162.
+k-83-1.pdf  used on input line 2168.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 <Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-85-1.pdf, id=369, 433.
 62pt x 252.945pt>
@@ -1071,7 +1072,7 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-85-1.pdf Graphic
 file (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-85-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-85-1.pdf  used on input line 2194.
+k-85-1.pdf  used on input line 2200.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 [36 <./Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-83-1.pdf>]
 <Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-87-1.pdf, id=383, 433.
@@ -1080,7 +1081,7 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-87-1.pdf Graphic
 file (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-87-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-87-1.pdf  used on input line 2226.
+k-87-1.pdf  used on input line 2232.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 [37 <./Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-85-1.pdf>]
 <Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-89-1.pdf, id=395, 433.
@@ -1089,7 +1090,7 @@ File: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-89-1.pdf Graphic
 file (type pdf)
 <use Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-89-1.pdf>
 Package pdftex.def Info: Tarea_2_Macroeconomía_files/figure-latex/unnamed-chun
-k-89-1.pdf  used on input line 2258.
+k-89-1.pdf  used on input line 2264.
 (pdftex.def)             Requested size: 433.62555pt x 252.94823pt.
 [38 <./Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-87-1.pdf>] [39 <
 ./Tarea_2_Macroeconomía_files/figure-latex/unnamed-chunk-89-1.pdf>] [40] [41] 
@@ -1102,11 +1103,11 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 18519 strings out of 476406
- 310682 string characters out of 2788151
+ 18521 strings out of 476406
+ 310703 string characters out of 2788151
  1878787 words of memory out of 3000000
- 38138 multiletter control sequences out of 15000+600000
- 591922 words of font info for 199 fonts, out of 8000000 for 9000
+ 38139 multiletter control sequences out of 15000+600000
+ 592685 words of font info for 200 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  74i,11n,81p,1021b,658s stack positions out of 10000i,1000n,20000p,200000b,80000s
 {C:/Users/Leobardo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc
@@ -1137,7 +1138,7 @@ al/Programs/MiKTeX/fonts/type1/public/lm/lmsy5.pfb><C:/Users/Leobardo/AppData/L
 ocal/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/Leobardo/AppData
 /Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Users/Leobardo/AppDa
 ta/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb>
-Output written on Tarea_2_Macroeconomía.pdf (44 pages, 824689 bytes).
+Output written on Tarea_2_Macroeconomía.pdf (44 pages, 824714 bytes).
 PDF statistics:
  669 PDF objects out of 1000 (max. 8388607)
  149 named destinations out of 1000 (max. 500000)
